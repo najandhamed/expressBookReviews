@@ -34,9 +34,15 @@ public_users.get('/', async function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn', function (req, res) {
+public_users.get('/isbn/:isbn', async function (req, res) {
     const { isbn } = req.params
-    res.send(books[isbn])
+
+    try {
+        const allBooks = await getBooks()
+        res.send(allBooks[isbn])
+    } catch (error) {
+        res.status(500).send({ "message": "Error on retrieving books" })
+    }
 });
 
 // Get book details based on author
