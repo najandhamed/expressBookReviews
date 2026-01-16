@@ -52,11 +52,13 @@ public_users.get('/author/:author', async function (req, res) {
     try {
         const allBooks = await getBooks()
 
-        const findBook = Object.values(allBooks).find(book => book.author.toLowerCase().includes(author.toLowerCase()))
-        if (findBook)
-            res.send(JSON.stringify(findBook, null, 4))
-        else
-            res.json({ "message": `No books found with ${author}!` })
+        const books = Object.values(allBooks).filter(book => book.author.toLowerCase().includes(author.toLowerCase()))
+
+        if (books.length > 0) {
+            res.status(200).send({ books, "message": "Successful" });
+        } else {
+            res.status(404).json({ message: "No books found for this author" });
+        }
     } catch (error) {
         res.status(500).send({ "message": "Error on retrieving books" })
     }
@@ -69,11 +71,13 @@ public_users.get('/title/:title', async function (req, res) {
     try {
         const allBooks = await getBooks()
 
-        const findBook = Object.values(allBooks).find(book => book.title.toLowerCase().includes(title.toLowerCase()))
-        if (findBook)
-            res.send(JSON.stringify(findBook, null, 4))
-        else
-            res.json({ "message": `No books found with ${author}!` })
+        const books = Object.values(allBooks).filter(book => book.title.toLowerCase().includes(title.toLowerCase()))
+
+        if (books.length > 0) {
+            res.status(200).send({ books, "message": "Successful" });
+        } else {
+            res.status(404).json({ message: "No books found for this title" });
+        }
     } catch (error) {
         res.status(500).send({ "message": "Error on retrieving books" })
     }
@@ -84,7 +88,7 @@ public_users.get('/review/:isbn', function (req, res) {
     const { isbn } = req.params
     const book = books[isbn]
     if (book)
-        res.send(JSON.stringify(book.reviews, null, 4))
+        res.status(200).send({ "review": book.reviews, "message": "Successful" })
     else
         res.json({ "message": `No books found with ${isbn}!` })
 });

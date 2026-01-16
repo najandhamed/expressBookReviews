@@ -1,9 +1,8 @@
-curl -X GET http://localhost:5000/author/Hans
-{
-    "author": "Hans Christian Andersen",
-    "title": "Fairy tales",
-    "reviews": {}
-}
+curl -X GET http://localhost:5000/author/Chinua%20Achebe
+{"books":[{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}],"message":"Successful"}
 
-curl -X GET http://localhost:5000/author/najand
-{"message":"No books found with najand!"}
+curl -X GET http://localhost:5000/author/Hans
+{"books":[{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}],"message":"Successful"}
+
+curl -X GET http://localhost:5000/author/Unknown
+{"books":[{"author":"Unknown","title":"The Epic Of Gilgamesh","reviews":{}},{"author":"Unknown","title":"The Book Of Job","reviews":{}},{"author":"Unknown","title":"One Thousand and One Nights","reviews":{}},{"author":"Unknown","title":"Njál's Saga","reviews":{}}],"message":"Successful"}

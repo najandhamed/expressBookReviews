@@ -1,9 +1,5 @@
-curl -X GET http://localhost:5000/title/Thousand
-{
-    "author": "Unknown",
-    "title": "One Thousand and One Nights",
-    "reviews": {}
-}
+curl -X GET http://localhost:5000/title/Fairy%20tales
+{"books":[{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}],"message":"Successful"}
 
-curl -X GET http://localhost:5000/title/najand
-{"message":"No books found with najand!"}
+curl -X GET http://localhost:5000/title/Thousand
+{"books":[{"author":"Unknown","title":"One Thousand and One Nights","reviews":{}}],"message":"Successful"}
