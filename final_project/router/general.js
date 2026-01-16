@@ -46,13 +46,22 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 });
 
 // Get book details based on author
-public_users.get('/author/:author', function (req, res) {
+public_users.get('/author/:author', async function (req, res) {
     const { author } = req.params
-    const findBook = Object.values(books).find(book => book.author.toLowerCase().includes(author.toLowerCase()))
-    if (findBook)
-        res.send(JSON.stringify(findBook, null, 4))
-    else
-        res.json({ "message": `No books found with ${author}!` })
+
+    const { isbn } = req.params
+
+    try {
+        const allBooks = await getBooks()
+
+        const findBook = Object.values(allBooks).find(book => book.author.toLowerCase().includes(author.toLowerCase()))
+        if (findBook)
+            res.send(JSON.stringify(findBook, null, 4))
+        else
+            res.json({ "message": `No books found with ${author}!` })
+    } catch (error) {
+        res.status(500).send({ "message": "Error on retrieving books" })
+    }
 });
 
 // Get all books based on title
