@@ -4,6 +4,7 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+const getBooks = () => new Promise((res, rej) => res(books))
 
 public_users.post("/register", (req, res) => {
     const { username, password } = req.body
@@ -22,9 +23,14 @@ public_users.post("/register", (req, res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/', function (req, res) {
-    const stringifyBooks = JSON.stringify(books, null, 4)
-    res.send(stringifyBooks)
+public_users.get('/', async function (req, res) {
+    try {
+        const allBooks = await getBooks()
+        const stringifyBooks = JSON.stringify(allBooks, null, 4)
+        res.send(stringifyBooks)
+    } catch (error) {
+        res.status(500).send({ "message": "Error on retrieving books" })
+    }
 });
 
 // Get book details based on ISBN
