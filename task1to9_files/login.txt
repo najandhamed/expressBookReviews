@@ -1,0 +1,5 @@
+curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "najand", "password": "123"}'
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hamFuZCIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNzY4NDkxNjM2LCJleHAiOjE3Njg0OTUyMzZ9.C3OERO5fy3yfjHLnUmE2_o58ffcOyk7Jq_eVF_QIYtQ","message":"najand logged in!"}
+
+curl -X POST http://localhost:5000/customer/login -H "Content-Type: application/json" -d '{"username": "hamed", "password": "123"}'
+{"message":"The username/password is invalid!"}

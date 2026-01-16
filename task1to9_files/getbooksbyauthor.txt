@@ -1,0 +1,9 @@
+curl -X GET http://localhost:5000/author/Hans
+{
+    "author": "Hans Christian Andersen",
+    "title": "Fairy tales",
+    "reviews": {}
+}
+
+curl -X GET http://localhost:5000/author/najand
+{"message":"No books found with najand!"}

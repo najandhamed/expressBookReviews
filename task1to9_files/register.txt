@@ -1,0 +1,8 @@
+curl -X POST http://localhost:5000/register
+{"message":"The username/password is not provided!"}
+
+curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "najand", "password": "123"}'
+{"message":"najand is exist!"}
+
+curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username": "hamed", "password": "123"}'
+{"message":"The user successfully registered!"}

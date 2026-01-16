@@ -1,0 +1,39 @@
+curl -X DELETE http://localhost:5000/customer/auth/review/1cl
+{"message":"User not logged in!"}
+
+export TOKEN=$(curl -s -X POST http://localhost:5000/customer/login \
+    -H "Content-Type: application/json" \
+    -d '{"username":"najand", "password":"123"}' | \
+    node -pe 'JSON.parse(fs.readFileSync(0)).token')
+curl -X PUT http://localhost:5000/customer/auth/review/1 \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $TOKEN" \
+     -d '{"review":"This is a review"}'
+curl -X DELETE http://localhost:5000/customer/auth/review/1 \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $TOKEN" \
+{"book":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"najand":"This is a review"}},"message":"The review has been added/modified!"}> 
+{"book":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}},"message":"The review has been deleted!"}
+
+export TOKEN=$(curl -s -X POST http://localhost:5000/customer/login \
+    -H "Content-Type: application/json" \
+    -d '{"username":"najand", "password":"123"}' | \
+    node -pe 'JSON.parse(fs.readFileSync(0)).token')
+curl -X PUT http://localhost:5000/customer/auth/review/1 \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $TOKEN" \
+     -d '{"review":"This is a first review"}'
+export TOKEN=$(curl -s -X POST http://localhost:5000/customer/login \
+    -H "Content-Type: application/json" \
+    -d '{"username":"hamed", "password":"123"}' | \
+    node -pe 'JSON.parse(fs.readFileSync(0)).token')
+curl -X PUT http://localhost:5000/customer/auth/review/1 \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $TOKEN" \
+     -d '{"review":"This is a second review"}'
+curl -X DELETE http://localhost:5000/customer/auth/review/1 \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $TOKEN" \
+{"book":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"najand":"This is a first review"}},"message":"The review has been added/modified!"}
+{"book":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"najand":"This is a first review","hamed":"This is a second review"}},"message":"The review has been added/modified!"}> 
+{"book":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"najand":"This is a first review"}},"message":"The review has been deleted!"}
